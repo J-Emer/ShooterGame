@@ -90,8 +90,46 @@ namespace ShooterGame.Core
 
         private static void UpdateInputString()
         {
-            InputString = string.Join("", _currentKeys.GetPressedKeys().Where(GetKeyDown));
+            // InputString = string.Join("", _currentKeys.GetPressedKeys().Where(GetKeyDown));
+            InputString = "";
+            
+            bool shift = GetKey(Keys.LeftShift) || GetKey(Keys.RightShift);
+            
+            foreach (Keys key in _currentKeys.GetPressedKeys().Where(GetKeyDown))
+            {
+                char? c = KeyToChar(key, shift);
+                if (c.HasValue)
+                    InputString += c.Value;
+            }            
         }
+
+        private static char? KeyToChar(Keys key, bool shift)
+        {
+            if (key >= Keys.A && key <= Keys.Z)
+                return shift ? key.ToString()[0] : char.ToLower(key.ToString()[0]);
+
+            if (key >= Keys.D0 && key <= Keys.D9)
+            {
+                string normal = "0123456789";
+                string shifted = ")!@#$%^&*(";
+                return shift ? shifted[key - Keys.D0] : normal[key - Keys.D0];
+            }
+
+            return key switch
+            {
+                Keys.Space => ' ',
+                Keys.OemPeriod => shift ? '>' : '.',
+                Keys.OemComma => shift ? '<' : ',',
+                Keys.OemMinus => shift ? '_' : '-',
+                Keys.OemPlus => shift ? '+' : '=',
+                Keys.OemQuestion => shift ? '?' : '/',
+                Keys.OemSemicolon => shift ? ':' : ';',
+                Keys.OemQuotes => shift ? '"' : '\'',
+                _ => null
+            };
+        }
+
+
         #endregion
     }
 }

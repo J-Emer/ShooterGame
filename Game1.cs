@@ -6,6 +6,7 @@ using ShooterGame.Core;
 using ShooterGame.ECS;
 using ShooterGame.ECS.Systems;
 using ShooterGame.Scenes;
+using ShooterGame.UI;
 
 namespace ShooterGame;
 
@@ -69,6 +70,7 @@ public class Game1 : Game
         Camera.Instance.Position = new Vector2(600, 300);
 
         new EntityWorld();
+        new UISystem();
         _spriteSystem = new SpriteSystem();
         _playerControllerSystem = new PlayerController();
         _physicsSystem = new PhysicsSystem();
@@ -105,13 +107,13 @@ public class Game1 : Game
             return;
         }
 
-
-        _physicsSystem.Update();
-        _playerControllerSystem.Update();
-        _velocitySytem.Update();
-        _bulletSystem.Update();
-        _healthSystem.Update();
-        _enemySystem.Update();
+        UISystem.Instance.Update();
+        // _physicsSystem.Update();
+        // _playerControllerSystem.Update();
+        // _velocitySytem.Update();
+        // _bulletSystem.Update();
+        // _healthSystem.Update();
+        // _enemySystem.Update();
 
         base.Update(gameTime);
     }
@@ -126,7 +128,12 @@ public class Game1 : Game
             return;
         }
 
-        //game logic
+        // UI
+        _spriteBatch.Begin();
+        UISystem.Instance.Draw(_spriteBatch);
+        _spriteBatch.End();
+
+        // Game logic
         _spriteBatch.Begin(SpriteSortMode.BackToFront, null, null, null, null, null, Camera.Instance.GetViewMatrix());
 
         _spriteSystem.Draw(_spriteBatch);
