@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ShooterGame.Core;
 using ShooterGame.ECS;
 using ShooterGame.ECS.Systems;
+using ShooterGame.Particles;
 using ShooterGame.Scenes;
 using ShooterGame.UI;
 
@@ -37,6 +39,10 @@ public class Game1 : Game
 
 
     private Texture2D _pointLight;
+
+
+
+    private Emitter _emitter;
 
 
 
@@ -85,6 +91,21 @@ public class Game1 : Game
         SceneManager.Instance.RegisterScene(new Demo("Demo"));
         SceneManager.Instance.RegisterScene(new Other("Other"));
         SceneManager.Instance.LoadScene("Demo");
+
+
+        _emitter = new Emitter(new Vector2(500, 300), new List<Effector>
+        {
+            new SizeEffector
+            {
+                StartValue = Vector2.Zero,
+                EndValue = new Vector2(10, 10)
+            },
+            new ColorEffector
+            {
+                StartValue = Color.Yellow,
+                EndValue = Color.Red
+            }
+        });
     }
 
     protected override void Update(GameTime gameTime)
@@ -114,7 +135,7 @@ public class Game1 : Game
         // _bulletSystem.Update();
         // _healthSystem.Update();
         // _enemySystem.Update();
-
+        _emitter.Update();
         base.Update(gameTime);
     }
 
@@ -140,6 +161,11 @@ public class Game1 : Game
         _colliderDebugSystem.Draw(_spriteBatch);
         _entityInfoSystem.Draw(_spriteBatch);
         
+        _spriteBatch.End();
+
+
+        _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, null, Camera.Instance.GetViewMatrix());
+        _emitter.Draw(_spriteBatch);
         _spriteBatch.End();
 
         // Dark overlay

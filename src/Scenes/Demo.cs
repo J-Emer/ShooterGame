@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using ShooterGame.Core;
 using ShooterGame.ECS;
 using ShooterGame.ECS.Components;
+using ShooterGame.Particles;
 using ShooterGame.StaticHelpers;
 using ShooterGame.UI;
 
@@ -25,35 +26,32 @@ namespace ShooterGame.Scenes
             // EntityFactory.Enemy(new Vector2(800, 600));
 
 
-            Panel _panel = new Panel
-            {
-                Position = new Vector2(100, 100),
-                Size = new Vector2(400, 400),
-                Layout = new GridLayout(3, 3),
-                Padding = 5,
-                BackgroundColor = Color.Gray
-            };
+            // Panel _panel = new Panel
+            // {
+            //     Position = new Vector2(100, 100),
+            //     Size = new Vector2(400, 400),
+            //     Layout = new GridLayout(3, 3),
+            //     Padding = 5,
+            //     BackgroundColor = Color.Gray
+            // };
 
-            UISystem.Instance.Add(_panel);
+            // UISystem.Instance.Add(_panel);
 
-            for (int i = 0; i < 9; i++)
-            {
-                Slot _slot = new Slot
-                {
-                    Text = i.ToString(),
-                    Name = $"Slot: {i}",
-                    BackgroundColor = Color.DimGray,
-                    BorderThickness = 2,
-                    BorderColor = Color.Black,
-                    SlotTexture = AssetLoader.GetTexture("Color")
-                };
-                _slot.OnClick += SlotClicked;
+            // for (int i = 0; i < 9; i++)
+            // {
+            //     Slot _slot = new Slot
+            //     {
+            //         Text = i.ToString(),
+            //         Name = $"Slot: {i}",
+            //         BackgroundColor = Color.DimGray,
+            //         BorderThickness = 2,
+            //         BorderColor = Color.Black,
+            //         SlotTexture = AssetLoader.GetTexture("Color")
+            //     };
+            //     _slot.OnClick += SlotClicked;
                 
-                _panel.Children.Add(_slot);
-            }
-
-
-
+            //     _panel.Children.Add(_slot);
+            // }
 
 
         }
