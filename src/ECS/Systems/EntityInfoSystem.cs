@@ -15,6 +15,7 @@ namespace ShooterGame.ECS.Systems
             {
                 Transform _tran = entity.GetComponent<Transform>();
 
+                _spritebatch.DrawString(AssetLoader.DefaultFont, $"ID: {entity.ID}", _tran.Position - new Vector2(0, 100), Color.White);
                 _spritebatch.DrawString(AssetLoader.DefaultFont, $"Name: {entity.Name}", _tran.Position - new Vector2(0, 80), Color.White);
                 _spritebatch.DrawString(AssetLoader.DefaultFont, $"Tag: {entity.Tag}", _tran.Position - new Vector2(0, 60), Color.White);
                 _spritebatch.DrawString(AssetLoader.DefaultFont, $"Position: {_tran.Position}", _tran.Position - new Vector2(0, 40), Color.White);

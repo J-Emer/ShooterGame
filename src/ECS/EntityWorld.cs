@@ -71,5 +71,6 @@ namespace ShooterGame.ECS
             _entities.Clear();
             _nextID = 0;
         }
+        public int EntityCount => _entities.Count();
     }
 }

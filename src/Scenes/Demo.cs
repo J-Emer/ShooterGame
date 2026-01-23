@@ -20,7 +20,7 @@ namespace ShooterGame.Scenes
         {
             Console.WriteLine($"{Name}: Load()");
 
-            // EntityFactory.Player(new Vector2(50, 50));
+            EntityFactory.Player(new Vector2(50, 50));
             // EntityFactory.Block(new Vector2(200, 200));
             // EntityFactory.Wall(new Vector2(500, 500));
             // EntityFactory.Enemy(new Vector2(800, 600));

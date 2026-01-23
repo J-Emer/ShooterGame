@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameConsole;
+using GameConsole.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ShooterGame.Commands;
 using ShooterGame.Core;
 using ShooterGame.ECS;
 using ShooterGame.ECS.Systems;
@@ -42,8 +45,7 @@ public class Game1 : Game
 
 
 
-    private Emitter _emitter;
-
+    private ConsoleWrapper _console;
 
 
     public Game1()
@@ -70,6 +72,14 @@ public class Game1 : Game
 
         AssetLoader.Init(Content, _graphics.GraphicsDevice, "font");
 
+        _console = new ConsoleWrapper(_graphics, AssetLoader.DefaultFont, 1280, 720, Dock.Center);
+        _console.IsActive = false;
+        _console.RegisterCommand(new Spawn());
+        _console.RegisterCommand(new EntityCount());
+        _console.RegisterCommand(new Inspect());
+        _console.RegisterCommand(new SceneCommand());
+        _console.RegisterCommand(new Debug());
+
         _pointLight = AssetLoader.GetTexture("PointLight");
 
         new Camera(_graphics.GraphicsDevice.Viewport);
@@ -93,23 +103,14 @@ public class Game1 : Game
         SceneManager.Instance.LoadScene("Demo");
 
 
-        _emitter = new Emitter(new Vector2(500, 300), new List<Effector>
-        {
-            new SizeEffector
-            {
-                StartValue = Vector2.Zero,
-                EndValue = new Vector2(10, 10)
-            },
-            new ColorEffector
-            {
-                StartValue = Color.Yellow,
-                EndValue = Color.Red
-            }
-        });
     }
 
     protected override void Update(GameTime gameTime)
     {
+        _console.Update();
+
+        if(_console.IsActive){return;}
+
         if(Input.GetKeyDown(Keys.Escape))
         {
             Exit();
@@ -129,13 +130,13 @@ public class Game1 : Game
         }
 
         UISystem.Instance.Update();
-        // _physicsSystem.Update();
-        // _playerControllerSystem.Update();
-        // _velocitySytem.Update();
-        // _bulletSystem.Update();
-        // _healthSystem.Update();
-        // _enemySystem.Update();
-        _emitter.Update();
+        _physicsSystem.Update();
+        _playerControllerSystem.Update();
+        _velocitySytem.Update();
+        _bulletSystem.Update();
+        _healthSystem.Update();
+        _enemySystem.Update();
+
         base.Update(gameTime);
     }
 
@@ -148,6 +149,7 @@ public class Game1 : Game
             Console.WriteLine("---GamePaused");
             return;
         }
+
 
         // UI
         _spriteBatch.Begin();
@@ -163,10 +165,8 @@ public class Game1 : Game
         
         _spriteBatch.End();
 
+        _console.Draw(_spriteBatch);
 
-        _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, null, Camera.Instance.GetViewMatrix());
-        _emitter.Draw(_spriteBatch);
-        _spriteBatch.End();
 
         // Dark overlay
         // _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
