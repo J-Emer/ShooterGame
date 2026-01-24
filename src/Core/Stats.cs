@@ -9,7 +9,7 @@ namespace ShooterGame.Core
     {
         public static Stats Instance{get; private set;}
         private Dictionary<string, Func<string>> _stats = new Dictionary<string, Func<string>>();
-        private Vector2 Position{get;set;} = new Vector2(10, 10);
+        public Vector2 Position{get;set;} = new Vector2(10, 10);
         public float YOffset{get;set;} = 20f;
         public Color FontColor{get;set;} = Color.White;
 

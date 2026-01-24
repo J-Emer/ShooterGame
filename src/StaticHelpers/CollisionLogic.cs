@@ -1,4 +1,5 @@
 using System;
+using ShooterGame.Components;
 using ShooterGame.ECS;
 using ShooterGame.ECS.Components;
 
@@ -19,7 +20,12 @@ namespace ShooterGame.StaticHelpers
 
             if(other.Tag == "Enemy")
             {
-                other.GetComponent<Health>().Value -= self.GetComponent<Bullet>().Damage;
+                other.Components.Add(new Damage
+                {
+                    Value = self.GetComponent<Bullet>().Damage
+                });
+
+                // other.GetComponent<Health>().Value -= self.GetComponent<Bullet>().Damage;
                 EntityWorld.Instance.DestroyEntity(self);
             }
         }

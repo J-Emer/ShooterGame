@@ -105,6 +105,7 @@ public class Game1 : Game
 
 
         new Stats();
+        Stats.Instance.Position = new Vector2(700, 10);
         Stats.Instance.Add("FPS", Time.GetFpsString);
         Stats.Instance.Add("Delta Time", Time.GetDeltaString);
         Stats.Instance.Add("Active Scene", SceneManager.Instance.ActiveSceneName);
@@ -174,14 +175,14 @@ public class Game1 : Game
         _console.Draw(_spriteBatch);
 
 
-        // Dark overlay
+        // // Dark overlay
         // _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-        // _spriteBatch.Draw(AssetLoader.GetPixel(), new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Black * 0.5f);
+        // _spriteBatch.Draw(AssetLoader.GetPixel(), new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Black * 0.9f);
         // _spriteBatch.End();
 
-        // Light
+        // // Light
         // _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
-        // _spriteBatch.Draw(_pointLight, Vector2.Zero, null, new Color(177, 189, 201) * 0.9f, 0f, Vector2.Zero, new Vector2(3f, 3f), SpriteEffects.None, 0);            
+        // _spriteBatch.Draw(_pointLight, Vector2.Zero, null, new Color(177, 189, 201) * 0.85f, 0f, Vector2.Zero, new Vector2(3f, 3f), SpriteEffects.None, 0);            
         // _spriteBatch.End();
 
         base.Draw(gameTime);

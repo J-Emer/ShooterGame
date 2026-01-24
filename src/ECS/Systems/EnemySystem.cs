@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using ShooterGame.Components;
 using ShooterGame.Core;
 using ShooterGame.ECS.Components;
 
@@ -46,7 +47,11 @@ namespace ShooterGame.ECS.Systems
                     if(dist <= _enemyComp.AttackRange)
                     {
                         Console.WriteLine("---enemy attack");
-                        _playerHealth.Value -= _enemyComp.Damage;
+                        //_playerHealth.Value -= _enemyComp.Damage;
+                        _player.Components.Add(new Damage
+                        {
+                            Value = _enemyComp.Damage
+                        });
                     }                    
                 }
 
