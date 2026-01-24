@@ -80,6 +80,7 @@ public class Game1 : Game
         _console.RegisterCommand(new SceneCommand());
         _console.RegisterCommand(new Debug());
 
+
         _pointLight = AssetLoader.GetTexture("PointLight");
 
         new Camera(_graphics.GraphicsDevice.Viewport);
@@ -103,6 +104,10 @@ public class Game1 : Game
         SceneManager.Instance.LoadScene("Demo");
 
 
+        new Stats();
+        Stats.Instance.Add("FPS", Time.GetFpsString);
+        Stats.Instance.Add("Delta Time", Time.GetDeltaString);
+        Stats.Instance.Add("Active Scene", SceneManager.Instance.ActiveSceneName);
     }
 
     protected override void Update(GameTime gameTime)
@@ -154,6 +159,7 @@ public class Game1 : Game
         // UI
         _spriteBatch.Begin();
         UISystem.Instance.Draw(_spriteBatch);
+        Stats.Instance.Draw(_spriteBatch);
         _spriteBatch.End();
 
         // Game logic
